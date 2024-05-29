@@ -176,7 +176,7 @@ def main(
     width: int = 256,
     num_points: int = 100000,
     save_imgs: bool = True,
-    img_path: str = "./input.png",
+    img_path: str = "input.png",
     iterations: int = 1000,
     lr: float = 0.01,
     output: str = "renders"
