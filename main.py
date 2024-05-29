@@ -10,7 +10,7 @@ from gsplat.project_gaussians import project_gaussians
 from gsplat.rasterize import rasterize_gaussians
 from PIL import Image
 from torch import Tensor, optim
-
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 class SimpleTrainer:
     """Trains random gaussians to fit an image."""
