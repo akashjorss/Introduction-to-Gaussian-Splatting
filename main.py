@@ -203,7 +203,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    if not args.input.is_file():
+    if not Path(args.input).is_file():
         raise FileNotFoundError(f"No file found at {args.input.resolve()}")
     
     main(img_path=args.input, 
