@@ -181,13 +181,9 @@ def main(
     lr: float = 0.01,
     output: str = "renders"
 ) -> None:
-    if img_path:
-        gt_image = image_path_to_tensor(img_path)
-    else:
-        gt_image = torch.ones((height, width, 3)) * 1.0
-        # make top left and bottom right red, blue
-        gt_image[: height // 2, : width // 2, :] = torch.tensor([1.0, 0.0, 0.0])
-        gt_image[height // 2 :, width // 2 :, :] = torch.tensor([0.0, 0.0, 1.0])
+    if not img_path.is_file():
+        raise FileNotFoundError(f"No file found at {img_path.resolve()}")
+    gt_image = image_path_to_tensor(Path(img_path))
 
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
     trainer.train(
