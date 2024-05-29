@@ -3,7 +3,7 @@ import os
 import time
 from pathlib import Path
 from typing import Optional
-
+import iio
 import numpy as np
 import torch
 from gsplat.project_gaussians import project_gaussians
@@ -79,7 +79,6 @@ class SimpleTrainer:
         lr: float = 0.01,
         save_imgs: bool = False,
         B_SIZE: int = 14,
-        out_dir: str = "renders"
     ):
         optimizer = optim.Adam(
             [self.rgbs, self.means, self.scales, self.opacities, self.quats], lr
@@ -144,10 +143,8 @@ class SimpleTrainer:
         if save_imgs:
             # save them as a gif with PIL
             frames = [Image.fromarray(frame) for frame in frames]
-            # out_dir = os.path.join(os.getcwd(), "renders")
-            os.makedirs(out_dir, exist_ok=True)
             frames[0].save(
-                f"{out_dir}/training.gif",
+                f"training.gif",
                 save_all=True,
                 append_images=frames[1:],
                 optimize=False,
@@ -178,16 +175,15 @@ def main(
     save_imgs: bool = True,
     img_path: str = "input.png",
     iterations: int = 1000,
-    lr: float = 0.01,
-    output: str = "renders"
+    lr: float = 0.01
 ) -> None:
-    gt_image = image_path_to_tensor(Path(img_path))
+    gt_image = iio.read(img_path)
+    gt_image = torch.tensor(gt_image, device="cuda:0")
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
     trainer.train(
         iterations=iterations,
         lr=lr,
-        save_imgs=save_imgs,
-        out_dir=output
+        save_imgs=save_imgs
     )
 
 
@@ -199,14 +195,13 @@ if __name__ == "__main__":
     parser.add_argument("--num_points", type=int, required=True)
     parser.add_argument("--iterations", type=int, required=True)
     parser.add_argument("--learning_rate", type=float, required=True)
-    parser.add_argument("--output", type=str, required=True)
 
     args = parser.parse_args()
 
     if not Path(args.input).is_file():
         raise FileNotFoundError(f"No file found at {args.input.resolve()}")
     
-    main(img_path=args.input, 
+    main(img_path=Path(args.input), 
         num_points=args.num_points, 
         iterations=args.iterations, 
         lr=args.learning_rate)
