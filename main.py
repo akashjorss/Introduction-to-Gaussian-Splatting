@@ -181,10 +181,7 @@ def main(
     lr: float = 0.01,
     output: str = "renders"
 ) -> None:
-    if not img_path.is_file():
-        raise FileNotFoundError(f"No file found at {img_path.resolve()}")
     gt_image = image_path_to_tensor(Path(img_path))
-
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
     trainer.train(
         iterations=iterations,
@@ -205,6 +202,10 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=str, required=True)
 
     args = parser.parse_args()
+
+    if not args.input.is_file():
+        raise FileNotFoundError(f"No file found at {args.input.resolve()}")
+    
     main(img_path=args.input, 
         num_points=args.num_points, 
         iterations=args.iterations, 
