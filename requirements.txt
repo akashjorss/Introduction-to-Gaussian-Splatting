@@ -1,4 +1,4 @@
 gsplat
 numpy
 Pillow
-iio
+Ninja

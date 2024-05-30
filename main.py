@@ -3,7 +3,6 @@ import os
 import time
 from pathlib import Path
 from typing import Optional
-import iio
 import numpy as np
 import torch
 from gsplat.project_gaussians import project_gaussians
