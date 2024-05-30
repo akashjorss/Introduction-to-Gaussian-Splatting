@@ -204,6 +204,7 @@ if __name__ == "__main__":
     if not Path(args.input).is_file():
         raise FileNotFoundError(f"No file found at {args.input.resolve()}")
     print(args.input)  # DEBUG
+    sys.exit()
     main(img_path=Path(args.input), 
         num_points=args.num_points, 
         iterations=args.iterations, 
