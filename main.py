@@ -191,6 +191,8 @@ def main(
 
 
 if __name__ == "__main__":
+    print('start')
+    sys.exit()
 
     import argparse
     parser = argparse.ArgumentParser()
