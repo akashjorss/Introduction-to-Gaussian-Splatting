@@ -177,8 +177,7 @@ def main(
     iterations: int = 1000,
     lr: float = 0.01
 ) -> None:
-    gt_image = iio.read(img_path)
-    gt_image = torch.tensor(gt_image, device="cuda:0")
+    gt_image = image_path_to_tensor(img_path)
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
     trainer.train(
         iterations=iterations,
