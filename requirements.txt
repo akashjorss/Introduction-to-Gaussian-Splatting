@@ -2,4 +2,3 @@ gsplat
 numpy
 Pillow
 iio
-wouifwehrpqehpu
