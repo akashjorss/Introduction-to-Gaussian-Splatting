@@ -1,4 +1,4 @@
-import math
+w/=++)#@!#!@#_+import math
 import os
 import sys
 import time
@@ -11,7 +11,7 @@ from gsplat.project_gaussians import project_gaussians
 from gsplat.rasterize import rasterize_gaussians
 from PIL import Image
 from torch import Tensor, optim
-#ROOT = os.path.dirname(os.path.realpath(__file__))
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 class SimpleTrainer:
     """Trains random gaussians to fit an image."""
@@ -178,8 +178,6 @@ def main(
     iterations: int = 1000,
     lr: float = 0.01
 ) -> None:
-    print("IMG PATH in main", img_path)
-    sys.exit()
     gt_image = iio.read(img_path)
     gt_image = torch.tensor(gt_image, device="cuda:0")
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
@@ -191,9 +189,6 @@ def main(
 
 
 if __name__ == "__main__":
-    print('start')
-    sys.exit()
-
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=str, required=True)
@@ -202,8 +197,7 @@ if __name__ == "__main__":
     parser.add_argument("--learning_rate", type=float, required=True)
 
     args = parser.parse_args()
-    print(args.input)  # DEBUG
-    sys.exit()
+
     if not Path(args.input).is_file():
         raise FileNotFoundError(f"No file found at {args.input.resolve()}")
     
