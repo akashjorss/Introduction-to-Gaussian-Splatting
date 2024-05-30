@@ -9,6 +9,8 @@ from gsplat.project_gaussians import project_gaussians
 from gsplat.rasterize import rasterize_gaussians
 from PIL import Image
 from torch import Tensor, optim
+from matplotlib import pyplot as plt
+
 ROOT = os.path.dirname(os.path.realpath(__file__))
 
 class SimpleTrainer:
@@ -86,6 +88,7 @@ class SimpleTrainer:
         frames = []
         times = [0] * 3  # project, rasterize, backward
         B_SIZE = 16
+        losses = []
         for iter in range(iterations):
             start = time.time()
             (
@@ -129,6 +132,7 @@ class SimpleTrainer:
             torch.cuda.synchronize()
             times[1] += time.time() - start
             loss = mse_loss(out_img, self.gt_image)
+            losses.append(loss.item())
             optimizer.zero_grad()
             start = time.time()
             loss.backward()
@@ -150,6 +154,7 @@ class SimpleTrainer:
                 duration=5,
                 loop=0,
             )
+            plot_loss_curve(losses, "loss_curve.png")
         print(
             f"Total(s):\nProject: {times[0]:.3f}, Rasterize: {times[1]:.3f}, Backward: {times[2]:.3f}"
         )
@@ -157,6 +162,27 @@ class SimpleTrainer:
             f"Per step(s):\nProject: {times[0]/iterations:.5f}, Rasterize: {times[1]/iterations:.5f}, Backward: {times[2]/iterations:.5f}"
         )
 
+def plot_loss_curve(losses, save_path: str):
+    """
+    Plot the training loss curve and save it to disk.
+
+    Args:
+    losses (list[float]): List of loss values for each iteration.
+    save_path (str): Path to save the plot image.
+    """
+    plt.figure(figsize=(10, 6))
+    plt.plot(losses, label='Training Loss', color='blue')
+    plt.ylim(0, 0.05)
+    plt.title('Training Loss Curve')
+    plt.xlabel('Iteration')
+    plt.ylabel('Loss')
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(save_path)
+    plt.close()
+
+    print(f"Loss curve saved to {save_path}")
 
 def image_path_to_tensor(image_path: Path):
     import torchvision.transforms as transforms
