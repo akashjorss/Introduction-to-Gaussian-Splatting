@@ -1,4 +1,4 @@
-w/=++)#@!#!@#_+import math
+import math
 import os
 import sys
 import time
