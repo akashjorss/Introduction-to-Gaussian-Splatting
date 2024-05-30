@@ -1,6 +1,3 @@
-import sys
-print("I am here")
-sys.exit()
 import math
 import os
 import time
