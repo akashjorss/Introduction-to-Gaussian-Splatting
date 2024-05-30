@@ -144,7 +144,7 @@ class SimpleTrainer:
             # save them as a gif with PIL
             frames = [Image.fromarray(frame) for frame in frames]
             frames[0].save(
-                f"training.gif",
+                "training.gif",
                 save_all=True,
                 append_images=frames[1:],
                 optimize=False,
