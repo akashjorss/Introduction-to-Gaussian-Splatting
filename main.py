@@ -179,6 +179,7 @@ def main(
     lr: float = 0.01
 ) -> None:
     print("IMG PATH in main", img_path)
+    sys.exit()
     gt_image = iio.read(img_path)
     gt_image = torch.tensor(gt_image, device="cuda:0")
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
