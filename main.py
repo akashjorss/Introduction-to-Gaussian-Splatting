@@ -1,5 +1,6 @@
 import math
 import os
+import sys
 import time
 from pathlib import Path
 from typing import Optional
@@ -177,6 +178,7 @@ def main(
     iterations: int = 1000,
     lr: float = 0.01
 ) -> None:
+    print("IMG PATH in main", img_path)
     gt_image = iio.read(img_path)
     gt_image = torch.tensor(gt_image, device="cuda:0")
     trainer = SimpleTrainer(gt_image=gt_image, num_points=num_points)
@@ -200,7 +202,7 @@ if __name__ == "__main__":
 
     if not Path(args.input).is_file():
         raise FileNotFoundError(f"No file found at {args.input.resolve()}")
-    
+    print(args.input)  # DEBUG
     main(img_path=Path(args.input), 
         num_points=args.num_points, 
         iterations=args.iterations, 
