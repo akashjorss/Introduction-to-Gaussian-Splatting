@@ -1,7 +1,7 @@
 # Gaussian Splatting in Python
 
 Gaussian Splatting is a technique used in signal processing to approximate a signal using Gaussian functions. This repository provides implementations for 1D, 2D, and 3D Gaussian Splatting for educational purposes.
-The code for 2D [gaussian splatting](2D_Gaussian_Splatting.ipynb) and [3D gaussian Splatting](main.py) respectively is derived from the following repository:
+The code for [2D gaussian splatting](2D_Gaussian_Splatting.ipynb) and [3D gaussian Splatting](main.py) respectively is derived from the following repository:
 
 - [2D Gaussian Splatting](https://github.com/OutofAi/2D-Gaussian-Splatting)
 - [Gaussian Splatting](https://github.com/nerfstudio-project/gsplat)
