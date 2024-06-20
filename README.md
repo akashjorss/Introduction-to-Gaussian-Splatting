@@ -17,6 +17,6 @@ git clone git@github.com:yourusername/yourrepository.git
 cd yourrepository
 pip install -r requirements.txt
 ```
-The Jupyter notebooks for 1D and 2D Gaussian Splatting can be run in local. You may need to install additional libraries for data processing and visualizing (pandas, seaborn). They are not listed in requirements.txt because they were not needed for the IPOL demo, which uses main.py. 
+The Jupyter notebooks for 1D and 2D Gaussian Splatting can be run in local. You may need to install additional libraries for data processing and visualizing (pandas, seaborn). They are not listed in requirements.txt because they were not needed for the IPOL demo, which uses main.py, which uses CUDA.
 
 This project is supposed to provide the prequisite knowledge for understanding the 3D Gaussian Splatting: https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/, and related works.
