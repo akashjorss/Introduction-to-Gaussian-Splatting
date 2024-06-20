@@ -3,6 +3,3 @@ numpy
 Pillow
 Ninja
 matplotlib
-# torchvision
-# seaborn
-# pandas
