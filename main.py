@@ -1,3 +1,8 @@
+"""
+This code is taken from the following repository: https://github.com/nerfstudio-project/gsplat
+and is under Apache-2.0 License.
+"""
+
 import math
 import os
 import time
