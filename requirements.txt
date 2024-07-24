@@ -1,4 +1,4 @@
-gsplat
+gsplat==1.0.0
 numpy
 Pillow
 Ninja
