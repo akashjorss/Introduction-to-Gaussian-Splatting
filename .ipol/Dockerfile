@@ -1,3 +1,4 @@
+RUN nvidia-settings --assign=LogLevel=3
 # use one of the images from this repository: https://github.com/centreborelli/ipol-docker-images/
 FROM registry.ipol.im/ipol:v2-py3.11-pytorch-gpu
 
