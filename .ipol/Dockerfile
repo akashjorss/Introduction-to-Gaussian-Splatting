@@ -1,4 +1,5 @@
 # use one of the images from this repository: https://github.com/centreborelli/ipol-docker-images/
+NVIDIA_SMI_DISABLE_BANNER=1
 FROM registry.ipol.im/ipol:v2-py3.11-pytorch-gpu
 
 # install additional debian packages
