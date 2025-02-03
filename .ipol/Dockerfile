@@ -23,8 +23,6 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION python
 ENV PATH $bin:$PATH
 
-ENV NVIDIA_SMI_DISABLE_BANNER=1
-
 # $HOME is writable by the user `ipol`, but 
 ENV HOME /home/ipol
 # chmod 777 so that any user can use the HOME, in case the docker is run with -u 1001:1001
