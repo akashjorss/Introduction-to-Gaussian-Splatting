@@ -1,63 +1,94 @@
 {
     "general": {
-        "demo_title": "Python Demo Template",
-        "requirements": "docker"
+       "demo_title": "Gaussian Splatting: An Introduction",
+       "description": "In this demo, we show how Images can be represented as 2D Gaussians instead of as pixels. This Gaussian representation is learnt using gradient descent. You can experiment with number of optimization steps, number of Gaussians and learning rate. More number of optimization steps and gaussians usually give better quality but also take more time to learn.",
+       "requirements": "docker,gpu"
     },
     "build": {
-        "url": "git@github.com:mlbriefs/template-python.git",
-        "rev": "origin/main",
-        "dockerfile": ".ipol/Dockerfile"
+       "url": "git@github.com:akashjorss/NeRF_3D_Reconstruction_End_End.git",
+       "rev": "origin/main",
+       "dockerfile": ".ipol/Dockerfile"
     },
     "inputs": [
-        {
-            "description": "input",
-            "max_pixels": "3000*3000",
-            "dtype": "x8i",
-            "ext": ".png",
-            "type": "image"
-        }
+       {
+          "id": "input_0",
+          "description": "Input image",
+          "max_pixels": "3000*3000",
+          "dtype": "x8i",
+          "ext": ".png",
+          "type": "image"
+       }
     ],
     "params": [
-        {
-            "id": "sigma",
-            "label": "sigma",
-            "comments": "Noise standard deviation",
-            "type": "range",
-            "values": {
-                "default": "30",
-                "max": 300,
-                "min": 0,
-                "step": 0.1
-            }
-        }
+       {
+          "id": "num_points",
+          "label": "Number of gaussians",
+          "comments": "Number of gaussians to learn",
+          "type": "range",
+          "values": {
+             "default": "100000",
+             "max": 1000000,
+             "min": 10000,
+             "step": 1000
+          }
+       },
+       {
+          "id": "iterations",
+          "label": "Number of optimization steps",
+          "comments": "Number of optimization steps",
+          "type": "range",
+          "values": {
+             "default": "1000",
+             "max": 2000,
+             "min": 10,
+             "step": 10
+          }
+       },
+       {
+          "id": "learning_rate",
+          "label": "Learning rate",
+          "comments": "Learning rate during Gradient Descent",
+          "type": "range",
+          "values": {
+             "default": "0.01",
+             "max": 0.1,
+             "min": 0.001,
+             "step": 0.001
+          }
+       }
     ],
     "results": [
-        {
-            "type": "gallery",
-            "contents": {
-                "Input": {
-                    "img": "input_0.png"
-                },
-                "Output": {
-                    "img": "output.png"
-                }
-            }
-        },
-        {
-            "contents": "stdout.txt",
-            "label": "<p>Output</p>",
-            "type": "text_file"
-        }
+       {
+          "type": "gallery",
+          "contents": {
+             "Input": {
+                "img": "input_0.png"
+             },
+             "Output": {
+                "img": "training.gif"
+             },
+             "Loss curve": {
+                "img": "loss_curve.png"
+             }
+          }
+       },
+       {
+          "contents": "stdout.txt",
+          "label": "<p>Output</p>",
+          "type": "text_file"
+       }
     ],
     "archive": {
-        "enable_reconstruct": true,
-        "files": {
-            "input_0.png": "Input",
-            "output.png": "Output"
-        },
-        "info": {
-            "run_time": "run time"
-        }
+       "enable_reconstruct": true,
+       "files": {
+          "input_0.png": "Input",
+          "training.gif": "Output",
+          "loss_curve.png": "Output",
+          "stdout.txt": "stdout"
+       },
+       "info": {
+          "run_time": "run time"
+       }
     },
-    "run": "python $bin/main.py --input $input_0 --sigma $sigma --output output.png"
-}
+    "run": "python $bin/main.py --input $input_0 --num_points $num_points --iterations $iterations --learning_rate $learning_rate"
+ }

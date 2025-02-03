@@ -1,30 +1,40 @@
-# use one of the images from this repository: https://github.com/centreborelli/ipol-docker-images/
+# Use one of the images from this repository:
+# https://github.com/centreborelli/ipol-docker-images/
 FROM registry.ipol.im/ipol:v2-py3.11-pytorch-gpu
 
-# install additional debian packages
+# Install additional Debian packages
 COPY .ipol/packages.txt packages.txt
-RUN apt-get update && apt-get install -y $(cat packages.txt) && rm -rf /var/lib/apt/lists/* && rm packages.txt
+RUN apt-get update && apt-get install -y $(cat packages.txt) \
+    && rm -rf /var/lib/apt/lists/* && rm packages.txt
 
-# copy the requirements.txt and install python packages
+# Copy the requirements.txt and install Python packages
 COPY requirements.txt requirements.txt
 RUN pip3 install --no-cache-dir -r requirements.txt && rm requirements.txt
 
-# copy the code to $bin
+# Copy the code to $bin
 ENV bin /workdir/bin/
 RUN mkdir -p $bin
 WORKDIR $bin
 COPY . .
 
-# the execution will happen in the folder /workdir/exec
-# it will be created by IPOL
-
-# some QoL tweaks
+# Some quality-of-life tweaks
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION python
 ENV PATH $bin:$PATH
 
-# $HOME is writable by the user `ipol`, but 
+# Set HOME (writable by user 'ipol') and adjust permissions
 ENV HOME /home/ipol
-# chmod 777 so that any user can use the HOME, in case the docker is run with -u 1001:1001
-RUN groupadd -g 1000 ipol && useradd -m -u 1000 -g 1000 ipol -d $HOME && chmod -R 777 $HOME
+RUN groupadd -g 1000 ipol \
+    && useradd -m -u 1000 -g 1000 ipol -d $HOME \
+    && chmod -R 777 $HOME
+
+# Copy the entrypoint script into the image and make it executable
+COPY entrypoint.sh /workdir/entrypoint.sh
+RUN chmod +x /workdir/entrypoint.sh
+
+# Switch to the non-root user
 USER ipol
+
+# Set the entrypoint and default command
+ENTRYPOINT ["/workdir/entrypoint.sh"]
+CMD ["python", "/workdir/bin/main.py"]
